@@ -8,7 +8,7 @@ import customError from "../util/customError.js";
 export const createNews = asyncErrorHandler(async (req, res, next) => {
     const journalistID = req.user._id;
     const { title, description } = req.body;
-    const categoryID =  '6890a4477fd2104222b950f7';
+    const categoryID =  '6890a5057fd2104222b95124';
 
     const journalist = await UserModel.findById(journalistID);
     if (!title || !description) {

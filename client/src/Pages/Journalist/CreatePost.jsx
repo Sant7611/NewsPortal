@@ -55,6 +55,7 @@ You must only respond with ONE exact category name from the following list, exac
 - Sport
 - Opinion
 - Culture
+- Education
 - Politic
 - Uncategorized
 
@@ -105,6 +106,7 @@ News content: ${userText}
     Culture: "68354ff9e9ef85e51b927784",
     Politic: "68355000e9ef85e51b927788",
     Uncategorized: "6835505ce9ef85e51b927792",
+    Education: "6835505ce9ef85e51b927795",
   };
 
   useEffect(() => {
