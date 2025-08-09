@@ -1,0 +1,25 @@
+//for newsSchema work
+        -all news should be fetched     ✅
+        -news should be extracted accodring to journalist id        ✅
+        -news should be extracted accodring to category id      ✅
+        -single news should be extracted according to their id      ✅
+        --to post news acccording to category           ✅
+        --to update news detail by JournalistID     ✅
+        -to delete news by JournalistID     ✅
+
+    --creating routes     ✅
+
+        --testing--
+         -all news should be fetched          ✅
+        -news should be extracted accodring to journalist id       ✅      
+        -news should be extracted accodring to category id           ✅
+        -single news should be extracted according to their id         ✅  
+        --to post news acccording to category                ✅
+        --to update news detail by JournalistID     ✅
+        -to delete news by JournalistID     ✅
+
+//for category api 
+        -post category by admin     ✅
+        -get all category       ✅
+        -update category by adminId     ✅
+        -delete category by adminid     ✅

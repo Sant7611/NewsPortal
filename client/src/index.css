@@ -1,0 +1,98 @@
+@import "tailwindcss";
+
+body {
+    background-color: #CBC8B9;
+    color: rgb(45, 40, 40);
+    height: 100vh;
+    /* Ensure body takes full height */
+    overflow: auto;
+    /* Ensure scroll is enabled */
+}
+
+/* Make the scrollbar track transparent */
+::-webkit-scrollbar {
+    width: 8px;
+    /* Scrollbar width */
+}
+
+/* Make the thumb (the draggable part) transparent */
+::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    /* Transparent thumb */
+    border-radius: 10px;
+}
+
+/* Optional: Customize scrollbar track color */
+::-webkit-scrollbar-track {
+    background-color: transparent;
+    /* Transparent track */
+}
+
+h1 {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+li {
+    list-style: none;
+}
+
+p {
+    font-size: medium;
+    font-family: Helvetica;
+}
+
+@font-face {
+    font-family: 'Helvetica';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Helvetica'), url('Helvetica.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Helvetica Oblique';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Helvetica Oblique'), url('Helvetica-Oblique.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Helvetica Compressed';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Helvetica Compressed'), url('helvetica-compressed-5871d14b6903a.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Helvetica Rounded Bold';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Helvetica Rounded Bold'), url('helvetica-rounded-bold-5871d05ead8de.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Helvetica';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Helvetica'), url('Helvetica-Bold.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Helvetica Bold Oblique';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Helvetica Bold Oblique'), url('Helvetica-BoldOblique.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Helvetica Light';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Helvetica Light'), url('helvetica-light-587ebe5a59211.woff') format('woff');
+}
+
+.special_font {
+    font-family: "Ibarra Real Nova", serif;
+    font-optical-sizing: auto;
+    font-weight: bold;
+    font-style: normal;
+}
