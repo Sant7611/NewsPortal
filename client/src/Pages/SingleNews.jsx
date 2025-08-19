@@ -97,8 +97,6 @@ export default function SingleNews() {
                                     src={news.image?.[0]?.path || img2}
                                     alt="news"
                                     variants={itemVariants}
-                                    whileHover={{ scale: 1.05 }}
-                                    transition={{ duration: 0.3 }}
                                 />
 
                                 <motion.p
@@ -117,7 +115,7 @@ export default function SingleNews() {
                 </motion.div>
 
                 <motion.div variants={itemVariants}>
-                    <RelatableNews />
+                    <RelatableNews />`1 `
                 </motion.div>
             </motion.div>
 

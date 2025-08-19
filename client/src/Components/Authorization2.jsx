@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { User, Lock, Mail, Github, Facebook, Linkedin, Chrome } from 'lucide-react';
 import { z } from 'zod';
 
-// Enhanced validation schemas with more detailed messages
+// Enhanced validation schemas with Gmail-only email and stronger password requirements
 const registrationSchema = z.object({
     name: z.string()
         .min(1, "Name is required")
@@ -12,15 +12,19 @@ const registrationSchema = z.object({
         .max(50, "Name cannot exceed 50 characters")
         .regex(/^[a-zA-Z\s]*$/, "Name can only contain letters and spaces"),
     email: z.string()
-        .email("Please enter a valid email address")
         .min(1, "Email is required")
-        .max(100, "Email cannot exceed 100 characters"),
+        .max(100, "Email cannot exceed 100 characters")
+        .regex(
+            /^[a-zA-Z0-9]([a-zA-Z0-9._-]*[a-zA-Z0-9])?@gmail\.com$/,
+            "Please enter a valid Gmail address (e.g., user@gmail.com)"
+        ),
     password: z.string()
-        .min(6, "Password must be at least 6 characters")
+        .min(8, "Password must be at least 8 characters")
         .max(50, "Password cannot exceed 50 characters")
         .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
         .regex(/[a-z]/, "Password must contain at least one lowercase letter")
-        .regex(/[0-9]/, "Password must contain at least one number"),
+        .regex(/[0-9]/, "Password must contain at least one number")
+        .regex(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/, "Password must contain at least one special character"),
     role: z.enum(['viewer', 'journalist', 'admin'], {
         required_error: "Please select a role",
         invalid_type_error: "Invalid role selected"
@@ -30,7 +34,10 @@ const registrationSchema = z.object({
 const loginSchema = z.object({
     email: z.string()
         .min(1, "Email is required")
-        .email("Please enter a valid email address"),
+        .regex(
+            /^[a-zA-Z0-9]([a-zA-Z0-9._-]*[a-zA-Z0-9])?@gmail\.com$/,
+            "Please enter a valid Gmail address (e.g., user@gmail.com)"
+        ),
     password: z.string()
         .min(1, "Password is required")
 });
@@ -141,13 +148,44 @@ function Authorization() {
         );
     };
 
+    // Password strength indicator component
+    const PasswordStrengthIndicator = ({ password }) => {
+        const requirements = [
+            { test: /^.{8,}$/, text: "At least 8 characters" },
+            { test: /[A-Z]/, text: "One uppercase letter" },
+            { test: /[a-z]/, text: "One lowercase letter" },
+            { test: /[0-9]/, text: "One number" },
+            { test: /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/, text: "One special character" }
+        ];
+
+        if (!password) return null;
+
+        return (
+            <div className="mt-2 p-3 bg-gray-50 rounded-lg">
+                <p className="text-xs font-semibold mb-2 text-gray-700">Password Requirements:</p>
+                <div className="space-y-1">
+                    {requirements.map((req, index) => (
+                        <div key={index} className="flex items-center text-xs">
+                            <span className={`mr-2 ${req.test.test(password) ? 'text-green-500' : 'text-red-500'}`}>
+                                {req.test.test(password) ? '✓' : '✗'}
+                            </span>
+                            <span className={req.test.test(password) ? 'text-green-700' : 'text-gray-600'}>
+                                {req.text}
+                            </span>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        );
+    };
+
     const inputClasses = "w-full py-3 px-5 pr-12 bg-gray-100 rounded-lg border-none outline-none text-base font-medium";
     const buttonClasses = "w-full h-12 bg-[#CBC8B9] rounded-lg shadow text-white font-semibold text-base hover:bg-[#bbb8a9] transition-colors";
     const linkClasses = "text-[#CBC8B9] hover:underline";
 
     return (
         <div className="min-h-screen flex items-center justify-center">
-            <div className="relative w-[850px] h-[550px] bg-white rounded-[30px] shadow-lg overflow-hidden">
+            <div className="relative w-[850px] h-[650px] bg-white rounded-[30px] shadow-lg overflow-hidden">
 
                 {/* Login Form */}
                 {isLoginActive ? (
@@ -164,7 +202,7 @@ function Authorization() {
                             <div className="relative mb-6">
                                 <input
                                     type="email"
-                                    placeholder="Email"
+                                    placeholder="Gmail Address"
                                     value={email}
                                     onChange={(event) => {
                                         setEmail(event.target.value);
@@ -219,14 +257,14 @@ function Authorization() {
                         animate={{ x: 0, opacity: 1 }}
                         exit={{ x: -500, opacity: 0 }}
                         transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                        className="absolute right-0 w-1/2 h-full bg-white flex items-center text-gray-800 text-center p-10 z-10"
+                        className="absolute right-0 w-1/2 h-full bg-white flex items-center text-gray-800 text-center p-8 z-10 overflow-y-auto"
                     >
                         <form className="w-full" onSubmit={HandleRegistration}>
-                            <h1 className="text-4xl font-bold mb-8">Registration</h1>
-                            <div className="relative mb-6">
+                            <h1 className="text-4xl font-bold mb-6">Registration</h1>
+                            <div className="relative mb-4">
                                 <input
                                     type="text"
-                                    placeholder="Name"
+                                    placeholder="Full Name"
                                     value={name}
                                     onChange={(event) => {
                                         setName(event.target.value);
@@ -237,10 +275,10 @@ function Authorization() {
                                 <User className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
                                 {renderError('name')}
                             </div>
-                            <div className="relative mb-6">
+                            <div className="relative mb-4">
                                 <input
                                     type="email"
-                                    placeholder="Email"
+                                    placeholder="Gmail Address"
                                     value={email}
                                     onChange={(event) => {
                                         setEmail(event.target.value);
@@ -251,7 +289,7 @@ function Authorization() {
                                 <Mail className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
                                 {renderError('email')}
                             </div>
-                            <div className="relative mb-6">
+                            <div className="relative mb-4">
                                 <input
                                     type="password"
                                     placeholder="Password"
@@ -264,9 +302,10 @@ function Authorization() {
                                 />
                                 <Lock className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
                                 {renderError('password')}
+                                <PasswordStrengthIndicator password={password} />
                             </div>
 
-                            <div className="relative mb-6">
+                            <div className="relative mb-4">
                                 <select
                                     value={role}
                                     onChange={(event) => {
